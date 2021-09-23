@@ -1,11 +1,14 @@
-package doc.dobedkina;
+package doc.dobedkina.tests;
 
 import com.codeborne.selenide.Condition;
+import doc.dobedkina.enumClasses.ToolsQaItems;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static com.codeborne.selenide.Configuration.startMaximized;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -39,5 +42,12 @@ public class ParametrizedTests {
 
     }
 
+    @EnumSource(ToolsQaItems.class)
+    @ParameterizedTest(name = "{0}")
+    void checkTextForSeveralPages(ToolsQaItems toolsQaItem) {
+        open("https://demoqa.com/");
+        $(".category-cards").$(byText(toolsQaItem.getDescription())).scrollTo().click();
+        $("html").shouldHave(Condition.text("Please select an item from left to start practice."));
 
+    }
 }
