@@ -6,7 +6,8 @@ public enum ToolsQaItems {
     FORMS ("Forms"),
     ALERTS ("Alerts, Frame & Windows"),
     WIDGETS ("Widgets"),
-    INTERACTIONS ("Interactions");
+    INTERACTIONS ("Interactions"),
+    BOOKS ("Books Store Application");
 
     private String description;
 
