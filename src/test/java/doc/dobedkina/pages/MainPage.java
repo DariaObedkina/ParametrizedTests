@@ -12,13 +12,15 @@ public class MainPage {
 
     //Действия
     @Step("Открываем страницу {URL}")
-    public void openPage() {
+    public MainPage openPage() {
         open(URL);
+        return this;
     }
 
     @Step("Переходим на страницу {pageName}")
-    public void goToPage(String pageName) {
+    public MainPage goToPage(String pageName) {
         $(".category-cards").$(byText(pageName)).click();
+        return this;
     }
 
     //Проверки
