@@ -30,7 +30,6 @@ public class ParametrizedTests {
                 Arguments.of(textBoxFormData1),
                 Arguments.of(textBoxFormData2)
         );
-
     }
 
     @BeforeEach
@@ -46,46 +45,45 @@ public class ParametrizedTests {
 
     @ParameterizedTest(name = "{4}")
     void checkTextBoxFormFilling(String userName, String email, String currentAddress, String permanentAddress, String testName) {
-        textBoxFormPage.openPage();
+        textBoxFormPage
+                .openPage()
+                .enterUserName(userName)
+                .enterUserEmail(email)
+                .enterCurrentAddress(currentAddress)
+                .enterPermanentAddress(permanentAddress)
+                .submitForm();
 
-        textBoxFormPage.enterUserName(userName);
-        textBoxFormPage.enterUserEmail(email);
-        textBoxFormPage.enterCurrentAddress(currentAddress);
-        textBoxFormPage.enterPermanentAddress(permanentAddress);
-        textBoxFormPage.submitForm();
-
-        textBoxFormPage.checkThatUserNameIsDisplayed(userName);
-        textBoxFormPage.checkThatEmailIsDisplayed(email);
-        textBoxFormPage.checkThatCurrentAddressIsDisplayed(currentAddress);
-        textBoxFormPage.checkThatPermanentAddressIsDisplayed(permanentAddress);
-
+        textBoxFormPage
+                .checkThatUserNameIsDisplayed(userName)
+                .checkThatEmailIsDisplayed(email)
+                .checkThatCurrentAddressIsDisplayed(currentAddress)
+                .checkThatPermanentAddressIsDisplayed(permanentAddress);
     }
 
     @EnumSource(value = ToolsQaItems.class, names = {"BOOKS"}, mode = EnumSource.Mode.EXCLUDE)
     @ParameterizedTest(name = "Проверка текста \"Please select an item from left to start practice.\" на странице " + "{0}")
     void checkTextForSeveralPages(ToolsQaItems toolsQaItem) {
-        mainPage.openPage();
-        mainPage.goToPage(toolsQaItem.getDescription());
-
-        mainPage.checkTextOnPage("Please select an item from left to start practice.");
-
+        mainPage
+                .openPage()
+                .goToPage(toolsQaItem.getDescription())
+                .checkTextOnPage("Please select an item from left to start practice.");
     }
 
     @MethodSource("textBoxFormFields")
     @ParameterizedTest(name = "Заполнение формы TextBox случайными данными")
     void testWithMethodSource(TextBoxFormData textBoxFormData) {
-        textBoxFormPage.openPage();
+        textBoxFormPage
+                .openPage()
+                .enterUserName(textBoxFormData.getUserName())
+                .enterUserEmail(textBoxFormData.getUserEmail())
+                .enterCurrentAddress(textBoxFormData.getCurrentAddress())
+                .enterPermanentAddress(textBoxFormData.getPermanentAddress())
+                .submitForm();
 
-        textBoxFormPage.enterUserName(textBoxFormData.getUserName());
-        textBoxFormPage.enterUserEmail(textBoxFormData.getUserEmail());
-        textBoxFormPage.enterCurrentAddress(textBoxFormData.getCurrentAddress());
-        textBoxFormPage.enterPermanentAddress(textBoxFormData.getPermanentAddress());
-        textBoxFormPage.submitForm();
-
-        textBoxFormPage.checkThatUserNameIsDisplayed(textBoxFormData.getUserName());
-        textBoxFormPage.checkThatEmailIsDisplayed(textBoxFormData.getUserEmail());
-        textBoxFormPage.checkThatCurrentAddressIsDisplayed(textBoxFormData.getCurrentAddress());
-        textBoxFormPage.checkThatPermanentAddressIsDisplayed(textBoxFormData.getPermanentAddress());
-
+        textBoxFormPage
+                .checkThatUserNameIsDisplayed(textBoxFormData.getUserName())
+                .checkThatEmailIsDisplayed(textBoxFormData.getUserEmail())
+                .checkThatCurrentAddressIsDisplayed(textBoxFormData.getCurrentAddress())
+                .checkThatPermanentAddressIsDisplayed(textBoxFormData.getPermanentAddress());
     }
 }
